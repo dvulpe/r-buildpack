@@ -32,7 +32,6 @@ cat << EOF > $BUILD_DIR/boot.sh
 
 echo "Starting R project"
 declare -x
-echo "Current folder: $PWD"
 
 cd /app
 /app/bin/Rscript main.R
