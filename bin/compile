@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -euo pipefail
+set -eu
 
 R_BINARY_LOCATION=https://github.com/dvulpe/r-buildpack/releases/download/v0.1.0/R-3.4.2.tar.gz
 
