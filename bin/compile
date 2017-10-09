@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-set -eu
+set -euo pipefail
 
 R_BINARY_LOCATION=https://github.com/dvulpe/r-buildpack/releases/download/v0.1.0/R-3.4.2.tar.gz
 
@@ -17,7 +17,12 @@ echo "Current folder ${WORKDIR}"
 cd $BUILD_DIR
 
 echo "Downloading R 3.4.2 binaries"
-curl -sS -L -o $CACHE_DIR/R-3.4.2.tar.gz $R_BINARY_LOCATION
-tar -zxf $CACHE_DIR/R-3.4.2.tar.gz
+time {
+    curl -sS -L -o $CACHE_DIR/R-3.4.2.tar.gz $R_BINARY_LOCATION
+}
+echo "Decompressing R-3.4.2 binaries"
+time {
+    tar -zxf $CACHE_DIR/R-3.4.2.tar.gz
+}
 
 cd $WORKDIR

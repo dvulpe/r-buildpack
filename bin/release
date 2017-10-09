@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# bin/release <build-dir>
+
+set -euo pipefail
+
+echo -e "---\ndefault_process_types:\n  web: \$HOME/boot.sh"
