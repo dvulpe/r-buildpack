@@ -2,17 +2,6 @@
 
 set -euo pipefail
 
-BUILD_DIR=$1
-CACHE_DIR=$2
-BUILDPACK_PATH=$(dirname $(readlink -f ${BASH_SOURCE%/*}))
-DEPS_DIR="$BUILD_DIR/.cloudfoundry"
-
-mkdir -p $CACHE_DIR
-mkdir -p "$DEPS_DIR/0"
-mkdir -p "$BUILD_DIR/.profile.d"
-
-echo "export DEPS_DIR=\$HOME/.cloudfoundry" > "$BUILD_DIR/.profile.d/0000_set-deps-dir.sh"
-
 echo "deb http://cran.ma.imperial.ac.uk/bin/linux/ubuntu/ trusty/" >> /etc/apt/sources.list && \
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 && \
 	apt-get -q update && \
