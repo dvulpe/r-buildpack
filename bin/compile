@@ -27,10 +27,6 @@ fi
 echo "Decompressing R-3.4.2 binaries"
 tar -zxf $R_CACHED_BINARY
 
-ls -latr
-echo "Installing R dependencies"
-./bin/Rscript ./init.R
-
 cat << EOF > $BUILD_DIR/boot.sh
 #!/usr/bin/env bash
 
