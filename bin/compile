@@ -11,8 +11,13 @@ export DEPS_DIR="$BUILD_DIR/.cloudfoundry"
 mkdir -p "$DEPS_DIR/0"
 mkdir -p "$BUILD_DIR/.profile.d"
 
-pushd $BUILD_DIR
-    echo "Downloading R 3.4.2 binaries"
-    curl -sS -L -o $CACHE_DIR/R-3.4.2.tar.gz $R_BINARY_LOCATION
-    tar -zxf $CACHE_DIR/R-3.4.2.tar.gz
-popd
+WORKDIR=$PWD
+echo "Current folder ${WORKDIR}"
+
+cd $BUILD_DIR
+
+echo "Downloading R 3.4.2 binaries"
+curl -sS -L -o $CACHE_DIR/R-3.4.2.tar.gz $R_BINARY_LOCATION
+tar -zxf $CACHE_DIR/R-3.4.2.tar.gz
+
+cd $WORKDIR
