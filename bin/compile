@@ -28,8 +28,10 @@ echo "Decompressing R-3.4.2 binaries"
 tar -zxf $R_CACHED_BINARY
 
 cat << EOF > $BUILD_DIR/boot.sh
+#!/usr/bin/env bash
+
 echo "Starting R project"
-declare -i
+declare -x
 
 /app/bin/Rscript main.R
 EOF
