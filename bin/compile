@@ -2,10 +2,11 @@
 
 set -euo pipefail
 
-R_BINARY_LOCATION=https://github.com/dvulpe/r-buildpack/releases/download/v0.1.0/R-3.4.2.tar.gz
-
 BUILD_DIR=$1
 CACHE_DIR=$2
+
+R_BINARY_LOCATION=https://github.com/dvulpe/r-buildpack/releases/download/v0.1.0/R-3.4.2.tar.gz
+R_CACHED_BINARY="$CACHE_DIR/R-3.4.2.tar.gz"
 
 export DEPS_DIR="$BUILD_DIR/.cloudfoundry"
 mkdir -p "$DEPS_DIR/0"
@@ -16,13 +17,17 @@ echo "Current folder ${WORKDIR}"
 
 cd $BUILD_DIR
 
-echo "Downloading R 3.4.2 binaries"
-time {
-    curl -sS -L -o $CACHE_DIR/R-3.4.2.tar.gz $R_BINARY_LOCATION
-}
+if [ -f $R_CACHED_BINARY ]; then
+    echo "Using R 3.4.2 cached binaries"
+else
+    echo "Downloading R 3.4.2 binaries"
+    time {
+        curl -sS -L -o $R_CACHED_BINARY $R_BINARY_LOCATION
+    }
+fi
 echo "Decompressing R-3.4.2 binaries"
 time {
-    tar -zxf $CACHE_DIR/R-3.4.2.tar.gz
+    tar -zxf $R_CACHED_BINARY
 }
 
 cd $WORKDIR
