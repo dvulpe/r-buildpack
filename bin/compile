@@ -34,4 +34,6 @@ declare -i
 /app/bin/Rscript main.R
 EOF
 
+chmod +x $BUILD_DIR/boot.sh
+
 cd $WORKDIR
