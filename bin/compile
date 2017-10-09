@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -euo pipefail
 
@@ -6,7 +6,7 @@ R_BINARY_LOCATION=https://github.com/dvulpe/r-buildpack/releases/download/v0.1.0
 
 BUILD_DIR=$1
 CACHE_DIR=$2
-export BUILDPACK_DIR=`dirname $(readlink -f ${BASH_SOURCE%/*})`
+
 export DEPS_DIR="$BUILD_DIR/.cloudfoundry"
 mkdir -p "$DEPS_DIR/0"
 mkdir -p "$BUILD_DIR/.profile.d"
@@ -16,4 +16,3 @@ pushd $BUILD_DIR
     curl -sS -L -o $CACHE_DIR/R-3.4.2.tar.gz $R_BINARY_LOCATION
     tar -zxf $CACHE_DIR/R-3.4.2.tar.gz
 popd
-
