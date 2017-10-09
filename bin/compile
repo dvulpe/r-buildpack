@@ -25,14 +25,18 @@ else
 fi
 
 echo "Decompressing R-3.4.2 binaries"
-tar -zxf $R_CACHED_BINARY
+#tar -zxf $R_CACHED_BINARY
 
 cat << EOF > $BUILD_DIR/boot.sh
 #!/usr/bin/env bash
 
 echo "Starting R project"
 declare -x
+echo "Current folder: $PWD"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "Build folder: $DIR"
 
+cd $PWD
 /app/bin/Rscript main.R
 EOF
 
