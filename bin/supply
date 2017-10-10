@@ -16,8 +16,6 @@ R_CACHED_BINARY="$CACHE_DIR/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
 WORKDIR=$PWD
 echo "Current folder ${WORKDIR}"
 
-cd $BUILD_DIR
-
 if [ -f $R_CACHED_BINARY ]; then
     echo "Using R-${R_VERSION}-${R_SUFFIX} cached binaries"
 else
@@ -25,10 +23,14 @@ else
     curl -sS -L -o $R_CACHED_BINARY $R_BINARY_LOCATION
 fi
 
+mkdir -p "${DEPS_DIR}/${DEPS_IDX}""
+
+cd "${DEPS_DIR}/${DEPS_IDX}"
+
 echo "Decompressing R-${R_VERSION}-${R_SUFFIX} binaries"
 tar -zxf $R_CACHED_BINARY
 
-cat << EOF > $BUILD_DIR/boot.sh
+cat << EOF > ${DEPS_DIR}/${DEPS_IDX}/boot.sh
 #!/usr/bin/env bash
 
 echo "Starting R project"
@@ -37,6 +39,6 @@ cd /app
 /app/bin/Rscript main.R
 EOF
 
-chmod +x $BUILD_DIR/boot.sh
+chmod +x "${DEPS_DIR}/${DEPS_IDX}/boot.sh"
 
 cd $WORKDIR
