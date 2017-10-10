@@ -16,6 +16,11 @@ R_CACHED_BINARY="$CACHE_DIR/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
 WORKDIR=$PWD
 echo "Current folder ${WORKDIR}"
 
+mkdir -p "$BUILD_DIR/.profile.d"
+cat << EOF > "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
+export PATH="\$PATH:/app/bin"
+EOF
+
 cd $BUILD_DIR
 
 if [ -f $R_CACHED_BINARY ]; then
