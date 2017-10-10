@@ -18,6 +18,8 @@ echo "Current folder ${WORKDIR}"
 
 mkdir -p "$BUILD_DIR/.profile.d"
 cat << EOF > "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
+#!/usr/bin/env bash
+
 export PATH="\$PATH:/app/bin"
 EOF
 
