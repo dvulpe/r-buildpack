@@ -21,6 +21,8 @@ cat << EOF > "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
 export PATH="\$PATH:/app/bin"
 EOF
 
+chmod +x "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
+
 cd $BUILD_DIR
 
 if [ -f $R_CACHED_BINARY ]; then
