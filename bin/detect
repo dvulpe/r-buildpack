@@ -2,4 +2,11 @@
 
 set -euo pipefail
 
-exit 0
+BUILD_DIR=$1
+
+if [ -f "${BUILD_DIR}/main.R" ];
+    echo "R project structure has been detected";
+    exit 0
+else
+    exit -1
+fi

@@ -4,41 +4,11 @@ set -euo pipefail
 
 BUILD_DIR=$1
 CACHE_DIR=$2
-R_VERSION="3.4.2"
-R_SUFFIX="20171009"
-
-R_BINARY_LOCATION="https://github.com/dvulpe/r-buildpack/releases/download/v0.1.1/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
-R_CACHED_BINARY="$CACHE_DIR/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
-
+export BUILDPACK_DIR=`dirname $(readlink -f ${BASH_SOURCE%/*})`
 export DEPS_DIR="$BUILD_DIR/.cloudfoundry"
 mkdir -p "$DEPS_DIR/0"
 mkdir -p "$BUILD_DIR/.profile.d"
+echo "export DEPS_DIR=\$HOME/.cloudfoundry" > "$BUILD_DIR/.profile.d/0000_set-deps-dir.sh"
 
-WORKDIR=$PWD
-echo "Current folder ${WORKDIR}"
-
-cd $BUILD_DIR
-
-if [ -f $R_CACHED_BINARY ]; then
-    echo "Using R-${R_VERSION}-${R_SUFFIX} cached binaries"
-else
-    echo "Downloading R-${R_VERSION}-${R_SUFFIX} binaries"
-    curl -sS -L -o $R_CACHED_BINARY $R_BINARY_LOCATION
-fi
-
-echo "Decompressing R-${R_VERSION}-${R_SUFFIX} binaries"
-tar -zxf $R_CACHED_BINARY
-
-cat << EOF > $BUILD_DIR/boot.sh
-#!/usr/bin/env bash
-
-echo "Starting R project"
-declare -x
-
-cd /app
-/app/bin/Rscript main.R
-EOF
-
-chmod +x $BUILD_DIR/boot.sh
-
-cd $WORKDIR
+$BUILDPACK_DIR/bin/supply "$BUILD_DIR" "$CACHE_DIR" "$DEPS_DIR" 0
+$BUILDPACK_DIR/bin/finalize "$BUILD_DIR" "$CACHE_DIR" "$DEPS_DIR" 0
