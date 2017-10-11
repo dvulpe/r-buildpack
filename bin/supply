@@ -8,9 +8,9 @@ DEPS_DIR=$3
 DEPS_IDX=$4
 
 R_VERSION="3.4.2"
-R_SUFFIX="20171009"
+R_SUFFIX="20171011"
 
-R_BINARY_LOCATION="https://github.com/dvulpe/r-buildpack/releases/download/v0.1.1/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
+R_BINARY_LOCATION="https://github.com/dvulpe/r-buildpack/releases/download/v0.1.4/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
 R_CACHED_BINARY="$CACHE_DIR/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
 
 WORKDIR=$PWD
