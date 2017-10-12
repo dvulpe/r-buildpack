@@ -38,9 +38,8 @@ fi
 
 echo "Decompressing R-${R_VERSION}-${R_SUFFIX} binaries"
 
-cd $DEPS_DIR/$DEPS_IDX
-tar -zxf $R_CACHED_BINARY
 cd $BUILD_DIR
+tar -zxf $R_CACHED_BINARY
 
 cat << EOF > $BUILD_DIR/boot.sh
 #!/usr/bin/env bash
@@ -52,11 +51,13 @@ cd /app
 EOF
 
 chmod +x $BUILD_DIR/boot.sh
-cp $DEPS_DIR/$DEPS_IDX/lib/R/library/rJava/jri/*.jar $BUILD_DIR/BOOT-INF/lib/
+cp $BUILD_DIR/lib/R/library/rJava/jri/*.jar $BUILD_DIR/BOOT-INF/lib/
 cat << EOF > $DEPS_DIR/$DEPS_IDX/config.yml
 name: r-buildpack
 config:
-  additional_libraries:
+  environment_variables:
+    R_HOME: "/app/lib/R"
+    LD_LIBRARY_PATH: "${R_HOME}/lib:${R_HOME}/bin:"
 EOF
 
 cd $WORKDIR
