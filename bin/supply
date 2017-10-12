@@ -19,6 +19,8 @@ echo "Current folder ${WORKDIR}"
 mkdir -p "$BUILD_DIR/.profile.d"
 cat << EOF > "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
 PATH="\$PATH:/app/bin"
+R_HOME="/app"
+LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:/app/lib/R/lib:/app/lib/R/library/rJava/libs"
 EOF
 
 chmod +x "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
