@@ -54,11 +54,7 @@ cat << EOF > $DEPS_DIR/$DEPS_IDX/config.yml
 name: r-buildpack
 config:
   additional_libraries:
-  - "/app/lib/R/lib"
-  - "/app/lib/R/library/rJava/jri"
-  java_opts:
-    bootclasspath_ps:
-    - "/app/lib/R/library/rJava/jri/*.jar"
+  - "/app/lib/R/library/rJava/jri/*.jar"
 EOF
 
 cd $WORKDIR
