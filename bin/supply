@@ -50,4 +50,13 @@ EOF
 
 chmod +x $BUILD_DIR/boot.sh
 
+cat << EOF > $DEPS_DIR/$DEPS_IDX/config.yml
+javaopts:
+  bootclasspath_ps:
+    - "/app/lib/R/library/rJava/jri/*.jar"
+  additional_libraries:
+    - "/app/lib/R/lib"
+    - "/app/lib/R/library/rJava/jri"
+EOF
+
 cd $WORKDIR
