@@ -49,9 +49,14 @@ echo "Starting R project"
 cd /app
 /app/bin/Rscript main.R
 EOF
-
 chmod +x $BUILD_DIR/boot.sh
-cp $BUILD_DIR/lib/R/library/rJava/jri/*.jar $BUILD_DIR/BOOT-INF/lib/
+
+
+if [ -d "$BUILD_DIR/BOOT-INF" ]; then
+    echo "Vendoring rJava jar files"
+    cp $BUILD_DIR/lib/R/library/rJava/jri/*.jar $BUILD_DIR/BOOT-INF/lib/
+fi
+
 cat << EOF > $DEPS_DIR/$DEPS_IDX/config.yml
 name: r-buildpack
 config:
