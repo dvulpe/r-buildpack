@@ -52,7 +52,7 @@ cd /app
 EOF
 
 chmod +x $BUILD_DIR/boot.sh
-cp $DEPS_DIR/$DEPS_IDX/lib/R/library/rJava/jri/JRI.jar $BUILD_DIR/BOO
+cp $DEPS_DIR/$DEPS_IDX/lib/R/library/rJava/jri/*.jar $BUILD_DIR/BOOT-INF/lib/
 cat << EOF > $DEPS_DIR/$DEPS_IDX/config.yml
 name: r-buildpack
 config:
