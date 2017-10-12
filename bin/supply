@@ -53,9 +53,5 @@ EOF
 
 chmod +x $BUILD_DIR/boot.sh
 cp $DEPS_DIR/$DEPS_IDX/lib/R/library/rJava/jri/JRI.jar $BUILD_DIR/BOOT-INF/lib/JRI.jar
-cat << EOF > $DEPS_DIR/$DEPS_IDX/config.yml
-name: r-buildpack
-config:
-EOF
 
 cd $WORKDIR
