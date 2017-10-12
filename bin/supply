@@ -56,7 +56,7 @@ config:
   additional_libraries:
   - "/app/lib/R/lib"
   - "/app/lib/R/library/rJava/jri"
-  javaopts:
+  java_opts:
     bootclasspath_ps:
     - "/app/lib/R/library/rJava/jri/*.jar"
 EOF
