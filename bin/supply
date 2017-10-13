@@ -8,7 +8,9 @@ DEPS_DIR=$3
 DEPS_IDX=$4
 
 BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
+export BUILDPACK_PATH=$BP_DIR
 source $BP_DIR/compile-extensions/lib/common
+export R_HOME="/app/lib/R"
 
 mkdir -p "$BUILD_DIR/.profile.d"
 cat << EOF > "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
@@ -37,7 +39,6 @@ cd /app
 EOF
 chmod +x $BUILD_DIR/boot.sh
 
-
 if [ -d "$BUILD_DIR/BOOT-INF" ]; then
     echo "Vendoring rJava jar files"
     cp $BUILD_DIR/lib/R/library/rJava/jri/*.jar $BUILD_DIR/BOOT-INF/lib/
@@ -47,8 +48,8 @@ cat << EOF > $DEPS_DIR/$DEPS_IDX/config.yml
 name: r-buildpack
 config:
   environment_variables:
-    R_HOME: "/app/lib/R"
-    LD_LIBRARY_PATH: "${R_HOME}/lib:${R_HOME}/bin:"
+    R_HOME: "${R_HOME}"
+    LD_LIBRARY_PATH: "/app/lib:/app/bin:"
 EOF
 
 $BP_DIR/compile-extensions/bin/check_buildpack_version $BP_DIR $CACHE_DIR
