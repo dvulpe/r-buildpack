@@ -38,7 +38,4 @@ config:
     LD_LIBRARY_PATH: "/app/lib:/app/bin:"
 EOF
 
-$BP_DIR/compile-extensions/bin/check_buildpack_version $BP_DIR $CACHE_DIR
-$BP_DIR/compile-extensions/bin/write_config_yml $BP_DIR "$DEPS_DIR/$DEPS_IDX"
-
 exit 0
