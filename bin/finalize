@@ -10,6 +10,16 @@ DEPS_IDX=$4
 BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
 export BUILDPACK_PATH=$BP_DIR
 
+cat << EOF > $BUILD_DIR/boot.sh
+#!/usr/bin/env bash
+
+echo "Starting R project"
+
+cd /app
+/app/bin/Rscript main.R
+EOF
+chmod +x $BUILD_DIR/boot.sh
+
 $BP_DIR/compile-extensions/bin/write_profiled_from_supply $DEPS_DIR $BUILD_DIR
 $BP_DIR/compile-extensions/bin/store_buildpack_metadata $BP_DIR $CACHE_DIR
 
