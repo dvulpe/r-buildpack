@@ -1,0 +1,15 @@
+---
+language: R
+
+exclude_files:
+  - .git/
+  - .gitignore
+  - .gitmodules
+
+dependencies:
+  - name: r-binary
+    version: 3.4.2
+    uri: https://github.com/dvulpe/r-buildpack/releases/download/v0.1.7/R-3.4.2-20171012.2.tar.gz
+    md5: a2485b598857d315aa53c1dd74faf477
+    cf_stacks:
+      - cflinuxfs2
