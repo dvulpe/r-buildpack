@@ -18,15 +18,6 @@ R_CACHED_BINARY="$CACHE_DIR/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
 WORKDIR=$PWD
 echo "Current folder ${WORKDIR}"
 
-mkdir -p "$BUILD_DIR/.profile.d"
-cat << EOF > "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
-PATH="\$PATH:/app/bin"
-R_HOME="/app"
-LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:/app/lib/R/lib:/app/lib/R/library/rJava/libs:/app/lib/R/library/rJava/libs"
-EOF
-
-chmod +x "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
-
 cd $BUILD_DIR
 
 if [ -f $R_CACHED_BINARY ]; then
@@ -53,6 +44,8 @@ tar -zxf $R_CACHED_BINARY
 cd $BUILD_DIR
 ln -sf ../deps/${DEPS_IDX}/bin
 ln -sf ../deps/${DEPS_IDX}/lib
+
+# needed during staging
 ln -sf ${DEPS_DIR}/${DEPS_IDX}/bin /app/bin
 ln -sf ${DEPS_DIR}/${DEPS_IDX}/lib /app/lib
 
