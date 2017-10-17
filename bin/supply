@@ -7,10 +7,16 @@ CACHE_DIR=$2
 DEPS_DIR=$3
 DEPS_IDX=$4
 
-BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
-export BUILDPACK_PATH=$BP_DIR
-source $BP_DIR/compile-extensions/lib/common
-export R_HOME="/app/lib/R"
+R_VERSION="3.4.2"
+R_SUFFIX="20171012.2"
+export PATH="$PATH:/app/bin"
+export R_HOME="/app"
+
+R_BINARY_LOCATION="https://github.com/dvulpe/r-buildpack/releases/download/v0.1.7/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
+R_CACHED_BINARY="$CACHE_DIR/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
+
+WORKDIR=$PWD
+echo "Current folder ${WORKDIR}"
 
 mkdir -p "$BUILD_DIR/.profile.d"
 cat << EOF > "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
@@ -21,12 +27,33 @@ EOF
 
 chmod +x "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
 
-$BP_DIR/compile-extensions/bin/download_dependency_by_name r-binary 3.4.2 ${BUILD_DIR}/R.tar.gz
 cd $BUILD_DIR
-tar -zxf R.tar.gz
-rm R.tar.gz
+
+if [ -f $R_CACHED_BINARY ]; then
+    echo "Using R-${R_VERSION}-${R_SUFFIX} cached binaries"
+else
+    echo "Downloading R-${R_VERSION}-${R_SUFFIX} binaries"
+    curl -sS -L -o $R_CACHED_BINARY $R_BINARY_LOCATION
+fi
+
+echo "Decompressing R-${R_VERSION}-${R_SUFFIX} binaries"
+
+cd $BUILD_DIR
+tar -zxf $R_CACHED_BINARY
+
+cat << EOF > $BUILD_DIR/boot.sh
+#!/usr/bin/env bash
+
+echo "Starting R project"
+
+cd /app
+/app/bin/Rscript main.R
+EOF
+chmod +x $BUILD_DIR/boot.sh
+
 
 if [ -d "$BUILD_DIR/BOOT-INF" ]; then
+    echo "Vendoring rJava jar files"
     cp $BUILD_DIR/lib/R/library/rJava/jri/*.jar $BUILD_DIR/BOOT-INF/lib/
 fi
 
