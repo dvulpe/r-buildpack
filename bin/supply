@@ -50,6 +50,10 @@ mkdir -p ${DEPS_DIR}/${DEPS_IDX}
 echo "Decompressing R-${R_VERSION}-${R_SUFFIX} binaries"
 cd ${DEPS_DIR}/${DEPS_IDX}
 tar -zxf $R_CACHED_BINARY
+ln -sf ${DEPS_DIR}/${DEPS_IDX}/bin ${BUILD_DIR}/bin
+ln -sf ${DEPS_DIR}/${DEPS_IDX}/lib ${BUILD_DIR}/lib
+ln -sf ${DEPS_DIR}/${DEPS_IDX}/bin /app/bin
+ln -sf ${DEPS_DIR}/${DEPS_IDX}/lib /app/lib
 
 if [ -d "$BUILD_DIR/BOOT-INF" ]; then
     echo "Vendoring rJava jar files"
@@ -62,8 +66,5 @@ config:
   environment_variables:
     LD_LIBRARY_PATH: "/app/lib:/app/bin:"
 EOF
-
-ln -sf ${DEPS_DIR}/${DEPS_IDX}/bin ${BUILD_DIR}/bin
-ln -sf ${DEPS_DIR}/${DEPS_IDX}/lib ${BUILD_DIR}/lib
 
 exit 0
