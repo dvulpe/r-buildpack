@@ -63,11 +63,10 @@ config:
   environment_variables:
     R_HOME: "/app/lib/R"
     LD_LIBRARY_PATH: "/app/lib:/app/bin:"
-    PATH: "/app/bin:"
 EOF
 
-mkdir -p $DEPS_DIR/$DEPS_IDX
-cd $DEPS_DIR/$DEPS_IDX
+mkdir -p ${DEPS_DIR}/${DEPS_IDX}
+cd ${DEPS_DIR}/${DEPS_IDX}
 tar -zxf $R_CACHED_BINARY
 
 exit 0
