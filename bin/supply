@@ -10,7 +10,7 @@ DEPS_IDX=$4
 R_VERSION="3.4.2"
 R_SUFFIX="20171012.2"
 export PATH="$PATH:/app/bin"
-export R_HOME="/app"
+export R_HOME="/app
 
 R_BINARY_LOCATION="https://github.com/dvulpe/r-buildpack/releases/download/v0.1.7/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
 R_CACHED_BINARY="$CACHE_DIR/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
@@ -65,5 +65,9 @@ config:
     LD_LIBRARY_PATH: "/app/lib:/app/bin:"
     PATH: "/app/bin:"
 EOF
+
+mkdir -p $DEPS_DIR/$DEPS_IDX
+cd $DEPS_DIR/$DEPS_IDX
+tar -zxf $R_CACHED_BINARY
 
 exit 0
