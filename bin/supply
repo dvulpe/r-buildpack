@@ -46,24 +46,22 @@ cd /app
 EOF
 chmod +x $BUILD_DIR/boot.sh
 
+mkdir -p ${DEPS_DIR}/${DEPS_IDX}
+echo "Decompressing R-${R_VERSION}-${R_SUFFIX} binaries"
+cd ${DEPS_DIR}/${DEPS_IDX}
+tar -zxf $R_CACHED_BINARY
 
 if [ -d "$BUILD_DIR/BOOT-INF" ]; then
     echo "Vendoring rJava jar files"
-    cp $BUILD_DIR/lib/R/library/rJava/jri/*.jar $BUILD_DIR/BOOT-INF/lib/
+    cp ${DEPS_DIR}/${DEPS_IDX}/lib/R/library/rJava/jri/*.jar $BUILD_DIR/BOOT-INF/lib/
 fi
 
 cat << EOF > $DEPS_DIR/$DEPS_IDX/config.yml
 name: r-buildpack
 config:
   environment_variables:
-    R_HOME: "/app/lib/R"
     LD_LIBRARY_PATH: "/app/lib:/app/bin:"
 EOF
-
-mkdir -p ${DEPS_DIR}/${DEPS_IDX}
-echo "Decompressing R-${R_VERSION}-${R_SUFFIX} binaries"
-cd ${DEPS_DIR}/${DEPS_IDX}
-tar -zxf $R_CACHED_BINARY
 
 ln -sf ${DEPS_DIR}/${DEPS_IDX}/bin ${BUILD_DIR}/bin
 ln -sf ${DEPS_DIR}/${DEPS_IDX}/lib ${BUILD_DIR}/lib
