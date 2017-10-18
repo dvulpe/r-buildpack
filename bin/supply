@@ -60,7 +60,8 @@ config:
   environment_variables:
     R_HOME: "/app/lib/R"
     PATH: "/app/bin:/app/lib"
-    LD_LIBRARY_PATH: "/app/lib"
+    LD_LIBRARY_PATH: "/app/lib:/app/bin:"
+    LIBRARY_PATH: "/app/lib:"
 EOF
 
 exit 0
