@@ -23,8 +23,8 @@ export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:${R_DIST}/lib/R/lib:${R_DIST}/lib/R/li
 
 if [ ! -d "../R" ]; then
     mkdir -p ../R
-    ln -sf ${DEPS_DIR}/${DEPS_IDX}/bin /home/vcap/R/bin
-    ln -sf ${DEPS_DIR}/${DEPS_IDX}/lib /home/vcap/R/lib
+    ln -sf \${DEPS_DIR}/${DEPS_IDX}/bin /home/vcap/R/bin
+    ln -sf \${DEPS_DIR}/${DEPS_IDX}/lib /home/vcap/R/lib
 fi
 
 EOF
