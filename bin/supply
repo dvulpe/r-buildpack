@@ -19,12 +19,12 @@ WORKDIR=$PWD
 echo "Current folder ${WORKDIR}"
 
 mkdir -p "$BUILD_DIR/.profile.d"
-cat << EOF > "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
-PATH="\$PATH:/app/bin"
-LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:/app/lib/R/lib:/app/lib/R/library/rJava/libs:/app/lib/R/library/rJava/libs"
+cat << EOF > "${BUILD_DIR}/.profile.d/10000000_set_R_path.sh"
+export PATH="\$PATH:/app/bin"
+export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:/app/lib/R/lib:/app/lib/R/library/rJava/libs:/app/lib/R/library/rJava/libs"
 EOF
 
-chmod +x "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
+chmod +x "${BUILD_DIR}/.profile.d/10000000_set_R_path.sh"
 
 cd $BUILD_DIR
 
