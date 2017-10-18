@@ -59,7 +59,7 @@ name: r-buildpack
 config:
   environment_variables:
     R_HOME: "/app/lib/R"
-    PATH: "/app/bin"
+    PATH: "/app/bin:/app/lib"
     LD_LIBRARY_PATH: "/app/lib"
 EOF
 
