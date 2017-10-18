@@ -18,6 +18,14 @@ R_CACHED_BINARY="$CACHE_DIR/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
 WORKDIR=$PWD
 echo "Current folder ${WORKDIR}"
 
+mkdir -p "$BUILD_DIR/.profile.d"
+cat << EOF > "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
+PATH="\$PATH:/app/bin"
+LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:/app/lib/R/lib:/app/lib/R/library/rJava/libs:/app/lib/R/library/rJava/libs"
+EOF
+
+chmod +x "${BUILD_DIR}/.profile.d/0000_set_R_path.sh"
+
 cd $BUILD_DIR
 
 if [ -f $R_CACHED_BINARY ]; then
@@ -59,9 +67,6 @@ name: r-buildpack
 config:
   environment_variables:
     R_HOME: "/app/lib/R"
-    PATH: "/app/bin:/app/lib"
-    LD_LIBRARY_PATH: "/app/lib:/app/bin:"
-    LIBRARY_PATH: "/app/lib:"
 EOF
 
 exit 0
