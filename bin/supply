@@ -15,14 +15,18 @@ export PATH="$PATH:${R_DIST}/bin"
 R_BINARY_LOCATION="https://github.com/dvulpe/r-buildpack/releases/download/v0.1.8/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
 R_CACHED_BINARY="$CACHE_DIR/R-${R_VERSION}-${R_SUFFIX}.tar.gz"
 
-WORKDIR=$PWD
-echo "Current folder ${WORKDIR}"
-
 mkdir -p "$BUILD_DIR/.profile.d"
-cat << EOF > "${BUILD_DIR}/.profile.d/10000000_set_R_path.sh"
+cat << EOF > "${BUILD_DIR}/.profile.d/10000000_prepare_R.sh"
 export PATH="\$PATH:/bin"
 export R_HOME="${R_DIST}/lib/R"
 export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:${R_DIST}/lib/R/lib:${R_DIST}/lib/R/library/rJava/libs:${R_DIST}/lib/R/library/rJava/libs"
+
+if [ ! -d "../R" ]; then
+    mkdir -p ../R
+    ln -sf ${DEPS_DIR}/${DEPS_IDX}/bin /home/vcap/R/bin
+    ln -sf ${DEPS_DIR}/${DEPS_IDX}/lib /home/vcap/R/lib
+fi
+
 EOF
 
 chmod +x "${BUILD_DIR}/.profile.d/10000000_set_R_path.sh"
@@ -50,11 +54,6 @@ mkdir -p ${DEPS_DIR}/${DEPS_IDX}
 echo "Decompressing R-${R_VERSION}-${R_SUFFIX} binaries"
 cd ${DEPS_DIR}/${DEPS_IDX}
 tar -zxf $R_CACHED_BINARY
-
-mkdir -p $BUILD_DIR/R
-cd $BUILD_DIR/R
-ln -sf ../../deps/${DEPS_IDX}/bin
-ln -sf ../../deps/${DEPS_IDX}/lib
 
 # needed during staging
 mkdir -p ${R_DIST}
