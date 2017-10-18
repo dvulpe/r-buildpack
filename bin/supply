@@ -19,7 +19,7 @@ mkdir -p "$BUILD_DIR/.profile.d"
 cat << EOF > "${BUILD_DIR}/.profile.d/10000000_prepare_R.sh"
 export PATH="\$PATH:/bin"
 export R_HOME="${R_DIST}/lib/R"
-export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:${R_DIST}/lib/R/lib:${R_DIST}/lib/R/library/rJava/libs:${R_DIST}/lib/R/library/rJava/libs"
+export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:${R_DIST}/lib"
 
 if [ ! -d "../R" ]; then
     mkdir -p ../R
@@ -40,16 +40,6 @@ else
     curl -sS -L -o $R_CACHED_BINARY $R_BINARY_LOCATION
 fi
 
-cat << EOF > $BUILD_DIR/boot.sh
-#!/usr/bin/env bash
-
-echo "Starting R project"
-
-cd /app
-${R_DIST}/bin/Rscript main.R
-EOF
-chmod +x $BUILD_DIR/boot.sh
-
 mkdir -p ${DEPS_DIR}/${DEPS_IDX}
 echo "Decompressing R-${R_VERSION}-${R_SUFFIX} binaries"
 cd ${DEPS_DIR}/${DEPS_IDX}
@@ -69,7 +59,7 @@ cat << EOF > $DEPS_DIR/$DEPS_IDX/config.yml
 name: r-buildpack
 config:
   environment_variables:
-    LD_LIBRARY_PATH: "${R_DIST}/lib:${R_DIST}/bin"
+    LD_LIBRARY_PATH: "${R_DIST}/lib:${R_DIST}/bin:${R_DIST}/lib/R/library/rJava/jri"
 EOF
 
 exit 0

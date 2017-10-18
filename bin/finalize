@@ -16,7 +16,7 @@ cat << EOF > $BUILD_DIR/boot.sh
 echo "Starting R project"
 
 cd /app
-/app/bin/Rscript main.R
+Rscript main.R
 EOF
 chmod +x $BUILD_DIR/boot.sh
 
