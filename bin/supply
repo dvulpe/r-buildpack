@@ -53,8 +53,8 @@ tar -zxf $R_CACHED_BINARY
 
 mkdir -p $BUILD_DIR/R
 cd $BUILD_DIR/R
-ln -sf ../deps/${DEPS_IDX}/bin
-ln -sf ../deps/${DEPS_IDX}/lib
+ln -sf ../../deps/${DEPS_IDX}/bin
+ln -sf ../../deps/${DEPS_IDX}/lib
 
 # needed during staging
 mkdir -p ${R_DIST}
