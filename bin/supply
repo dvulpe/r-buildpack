@@ -7,7 +7,7 @@ CACHE_DIR=$2
 DEPS_DIR=$3
 DEPS_IDX=$4
 
-R_VERSION="3.4.2"
+R_VERSION="3.4.1"
 R_SUFFIX="20171018.1"
 export R_DIST="/home/vcap/R"
 export PATH="$PATH:${R_DIST}/bin"
