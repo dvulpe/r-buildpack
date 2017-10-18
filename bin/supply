@@ -29,7 +29,7 @@ fi
 
 EOF
 
-chmod +x "${BUILD_DIR}/.profile.d/10000000_set_R_path.sh"
+chmod +x "${BUILD_DIR}/.profile.d/10000000_prepare_R.sh"
 
 cd $BUILD_DIR
 
